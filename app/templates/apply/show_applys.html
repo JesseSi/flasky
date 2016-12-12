@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}南山学院 - 报名申请列表{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>你好, {% if current_user.is_authenticated %}{{ current_user.username }}
+                {% else %}
+                    <a href="{{ url_for('auth.login') }} ">
+                            <span class="label label-primary">请登录</span>
+                    </a>
+                {% endif %}!</h1>
+</div>
+<div class="post-tabs">
+    {% include 'apply/_applys.html' %}
+</div>
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, 'apply.show_applys') }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

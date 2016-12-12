@@ -1,0 +1,39 @@
+{% if current_user.is_administrator() or applys|length > 0 %}
+    <table class="table">
+        <tr>
+            <th>报名编号</th>
+            <th>真实姓名</th>
+            <th>手机号码</th>
+            <th>报名专业</th>
+            <th>报名时间</th>
+            <th>报名状态</th>
+            <th></th>
+        </tr>
+
+        {% for apply in applys %}
+            <tr>
+                <td> {{ apply.id }} </td>
+                <td> {{ apply.real_name }} </td>
+                <td> {{ apply.mobile }} </td>
+                <td> {{ apply.apply_profession }} </td>
+                <td> {{ apply.apply_time }} </td>
+                <td> {{ apply.status }} </td>
+                <td>
+                    {% if current_user.is_administrator() %}
+                        <a href="{{ url_for('apply.edit_admin', id=apply.id) }} " target="_blank">
+                            <span class="label label-danger">详细信息[管理员]</span>
+                        </a>
+                    {% elif current_user.id == apply.author_id %}
+                        <a href="{{ url_for('apply.edit', id=apply.id) }}" target="_blank">
+                            <span class="label label-primary">详细信息</span>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <a href="{{ url_for('apply.apply') }}">
+        <span class="label label-danger">开始报名</span>
+    </a>
+{% endif %}

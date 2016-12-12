@@ -1,11 +1,13 @@
-from datetime import datetime
 import hashlib
-from werkzeug.security import generate_password_hash, check_password_hash
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from markdown import markdown
+from datetime import datetime
+
 import bleach
 from flask import current_app, request, url_for
 from flask.ext.login import UserMixin, AnonymousUserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from markdown import markdown
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from app.exceptions import ValidationError
 from . import db, login_manager
 
@@ -382,3 +384,17 @@ class Comment(db.Model):
 
 
 db.event.listen(Comment.body, 'set', Comment.on_changed_body)
+
+
+class Apply(db.Model):
+    __tablename__ = 'apply'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    real_name = db.Column(db.String(64), index=True)
+    mobile = db.Column(db.String(64), unique=True, index=True)
+    id_card = db.Column(db.String(200))
+    point = db.Column(db.Integer)
+    ticket_number = db.Column(db.String(200), unique=True, index=True)
+    apply_profession = db.Column(db.String(400))
+    apply_time = db.Column(db.DateTime(), default=datetime.utcnow)
+    status = db.Column(db.String(64), index=True)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
