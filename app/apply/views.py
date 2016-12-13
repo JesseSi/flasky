@@ -62,6 +62,7 @@ def edit(id):
     form.status.data = apply.status
     if form.status.data == u'已处理':
         from wtforms_components import read_only as rr
+        rr(form.status)
         rr(form.submit)
     return render_template('apply/edit_apply.html', form=form)
 

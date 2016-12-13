@@ -72,7 +72,6 @@ class EditApplyForm(Form):
         super(EditApplyForm, self).__init__(*args, **kwargs)
         read_only(self.apply_id)
         read_only(self.apply_time)
-        read_only(self.status)
 
     def validate_mobile(self, field):
         if Apply.query.filter_by(mobile=field.data).filter(Apply.id != self.apply_id.data).first():
