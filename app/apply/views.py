@@ -7,7 +7,6 @@ from . import apply_blueprint
 from .forms import ApplyForm, EditApplyForm, EditApplyAdminForm
 from .. import db
 from ..models import Apply
-from .forms import read_only, ReadOnlyWidgetProxy
 
 
 @apply_blueprint.route('/apply', methods=['GET', 'POST'])

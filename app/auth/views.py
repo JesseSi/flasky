@@ -35,7 +35,7 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
             return redirect(request.args.get('next') or url_for('main.index'))
-        flash('Invalid username or password.')
+        flash('用户或者密码错误')
     return render_template('auth/login.html', form=form)
 
 
@@ -43,7 +43,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.')
+    flash('已经退出登入.')
     return redirect(url_for('main.index'))
 
 
@@ -115,8 +115,7 @@ def password_reset_request():
                        'auth/email/reset_password',
                        user=user, token=token,
                        next=request.args.get('next'))
-        flash('An email with instructions to reset your password has been '
-              'sent to you.')
+        flash('重置密码的验证链接已经发到你的邮箱,请验证链接继续.')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)
 
@@ -131,7 +130,7 @@ def password_reset(token):
         if user is None:
             return redirect(url_for('main.index'))
         if user.reset_password(token, form.password.data):
-            flash('Your password has been updated.')
+            flash('密码已更新.')
             return redirect(url_for('auth.login'))
         else:
             return redirect(url_for('main.index'))
@@ -165,3 +164,4 @@ def change_email(token):
     else:
         flash('Invalid request.')
     return redirect(url_for('main.index'))
+
