@@ -2,6 +2,7 @@
 from flask import render_template, redirect, url_for, flash, abort, request
 from flask.ext.login import login_required, \
     current_user, current_app
+from wtforms_components import read_only as rr
 
 from . import apply_blueprint
 from .forms import ApplyForm, EditApplyForm, EditApplyAdminForm
@@ -16,10 +17,14 @@ def apply():
     if form.validate_on_submit():
         apply = Apply(real_name=form.real_name.data,
                       mobile=form.mobile.data,
+                      gender=form.gender.data,
+                      home_address=form.home_address.data,
+                      middle_school=form.middle_school.data,
                       id_card=form.id_card.data,
                       point=form.point.data,
                       ticket_number=form.ticket_number.data,
                       apply_profession=form.apply_profession.data,
+                      apply_profession_category=form.apply_profession_category.data,
                       status=u'新申请',
                       author_id=current_user.id)
         db.session.add(apply)
@@ -42,6 +47,9 @@ def edit(id):
     if form.validate_on_submit():
         apply.id = id
         apply.real_name = form.real_name.data
+        apply.gender = form.gender.data
+        apply.home_address = form.home_address.data
+        apply.middle_school = form.middle_school.data
         apply.mobile = form.mobile.data
         apply.id_card = form.id_card.data
         apply.point = form.point.data
@@ -53,16 +61,20 @@ def edit(id):
         return redirect(url_for('apply.show_applys'))
     form.apply_id.data = apply.id
     form.real_name.data = apply.real_name
+    form.gender.data = apply.gender
+    form.home_address.data = apply.home_address
+    form.middle_school.data = apply.middle_school
     form.mobile.data = apply.mobile
     form.id_card.data = apply.id_card
     form.point.data = apply.point
     form.ticket_number.data = apply.ticket_number
     form.apply_profession.data = apply.apply_profession
+    form.apply_profession_category.data = apply.apply_profession_category
     form.apply_time.data = apply.apply_time
     form.status.data = apply.status
     if form.status.data == u'已处理':
-        from wtforms_components import read_only as rr
-        rr(form.status)
+        rr(form.submit)
+    rr(form.status)
     return render_template('apply/edit_apply.html', form=form)
 
 
@@ -78,11 +90,15 @@ def edit_admin(id):
     if form.validate_on_submit():
         apply.id = id
         apply.real_name = form.real_name.data
+        apply.gender = form.gender.data
+        apply.home_address = form.home_address.data
+        apply.middle_school = form.middle_school.data
         apply.mobile = form.mobile.data
         apply.id_card = form.id_card.data
         apply.point = form.point.data
         apply.ticket_number = form.ticket_number.data
         apply.apply_profession = form.apply_profession.data
+        apply.apply_profession_category = form.apply_profession_category.data
         apply.apply_time = form.apply_time.data
         apply.status = form.status.data
         db.session.add(apply)
@@ -90,11 +106,15 @@ def edit_admin(id):
         return redirect(url_for('apply.show_applys'))
     form.apply_id.data = apply.id
     form.real_name.data = apply.real_name
+    form.gender.data = apply.gender
+    form.home_address.data = apply.home_address
+    form.middle_school.data = apply.middle_school
     form.mobile.data = apply.mobile
     form.id_card.data = apply.id_card
     form.point.data = apply.point
     form.ticket_number.data = apply.ticket_number
     form.apply_profession.data = apply.apply_profession
+    form.apply_profession_category.data = apply.apply_profession_category
     form.apply_time.data = apply.apply_time
     form.status.data = apply.status
     return render_template('apply/edit_apply.html', form=form)

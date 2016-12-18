@@ -13,7 +13,7 @@ class Config:
 
     MAIL_USERNAME = 'nsxy_zsb@163.com'
     MAIL_PASSWORD = 'zhm2016'
-    FLASKY_MAIL_SUBJECT_PREFIX = u'南山学院招生办'
+    FLASKY_MAIL_SUBJECT_PREFIX = u'南山学院招生资讯中心'
     FLASKY_MAIL_SENDER = 'nsxy_zsb@163.com'
     FLASKY_ADMIN = 'nsxy_zsb@163.com'
     FLASKY_POSTS_PER_PAGE = 10

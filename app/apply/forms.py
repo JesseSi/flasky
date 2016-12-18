@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from flask.ext.wtf import Form
 from wtforms import StringField, IntegerField, DateTimeField, SelectField, SubmitField, HiddenField
-from wtforms.validators import Required, Length
 from wtforms import ValidationError
+from wtforms.validators import Required, Length
+
 from ..models import Apply
 
 
@@ -32,11 +33,15 @@ def read_only(field):
 class ApplyForm(Form):
     id = HiddenField(u'报名编号', )
     real_name = StringField(u'真实姓名', validators=[Required(u'必填项'), Length(1, 64)])
-    mobile = StringField(u'手机号码', validators=[Required(u'必填项'), Length(11, 11, u'请填写正确的手机号码')])
+    gender = StringField(u'性别', validators=[Required(u'必填项'), Length(1, 8)])
+    home_address = StringField(u'家庭地址', validators=[Required(u'必填项'), Length(1, 400)])
+    mobile = StringField(u'联系电话', validators=[Required(u'必填项'), Length(1, 24, u'请填写正确的联系电话')])
     id_card = StringField(u'身份证号', validators=[Required(u'必填项'), Length(18, 18, u'请填写正确的身份证号')])
+    middle_school = StringField(u'毕业高中', validators=[Required(u'必填项'), Length(1, 400)])
     point = IntegerField(u'高考分数', validators=[Required(u'必填项')])
     ticket_number = StringField(u'准考证号', validators=[Required(u'必填项'), Length(1, 200)])
     apply_profession = StringField(u'申请专业', validators=[Required(u'必填项'), Length(1, 400)])
+    apply_profession_category = StringField(u'申请类别', validators=[Required(u'必填项'), Length(1, 400)])
     submit = SubmitField(u'报名')
 
     def validate_mobile(self, field):
@@ -55,11 +60,15 @@ class ApplyForm(Form):
 class EditApplyForm(Form):
     apply_id = StringField(u'报名编号', validators=[Required(u'必填项')])
     real_name = StringField(u'真实姓名', validators=[Required(u'必填项'), Length(1, 64)])
-    mobile = StringField(u'手机号码', validators=[Required(u'必填项'), Length(11, 11, u'请填写正确的手机号码')])
+    gender = StringField(u'性别', validators=[Required(u'必填项'), Length(1, 8)])
+    home_address = StringField(u'家庭地址', validators=[Required(u'必填项'), Length(1, 400)])
+    mobile = StringField(u'联系电话', validators=[Required(u'必填项'), Length(1, 24, u'请填写正确的联系电话')])
     id_card = StringField(u'身份证号', validators=[Required(u'必填项'), Length(18, 18, u'请填写正确的身份证号')])
+    middle_school = StringField(u'毕业高中', validators=[Required(u'必填项'), Length(1, 400)])
     point = IntegerField(u'高考分数', validators=[Required(u'必填项')])
     ticket_number = StringField(u'准考证号', validators=[Required(u'必填项'), Length(1, 200)])
     apply_profession = StringField(u'申请专业', validators=[Required(u'必填项'), Length(1, 400)])
+    apply_profession_category = StringField(u'申请类别', validators=[Required(u'必填项'), Length(1, 400)])
     apply_time = DateTimeField(u'申请时间')
     status = SelectField(
         u'报名状态',
@@ -90,11 +99,15 @@ class EditApplyForm(Form):
 class EditApplyAdminForm(Form):
     apply_id = StringField(u'报名编号', validators=[Required(u'必填项')])
     real_name = StringField(u'真实姓名', validators=[Required(u'必填项'), Length(1, 64)])
-    mobile = StringField(u'手机号码', validators=[Required(u'必填项'), Length(11, 11, u'请填写正确的手机号码')])
+    gender = StringField(u'性别', validators=[Required(u'必填项'), Length(1, 8)])
+    home_address = StringField(u'家庭地址', validators=[Required(u'必填项'), Length(1, 400)])
+    mobile = StringField(u'联系电话', validators=[Required(u'必填项'), Length(1, 24, u'请填写正确的联系电话')])
     id_card = StringField(u'身份证号', validators=[Required(u'必填项'), Length(18, 18, u'请填写正确的身份证号')])
+    middle_school = StringField(u'毕业高中', validators=[Required(u'必填项'), Length(1, 400)])
     point = IntegerField(u'高考分数', validators=[Required(u'必填项')])
     ticket_number = StringField(u'准考证号', validators=[Required(u'必填项'), Length(1, 200)])
     apply_profession = StringField(u'申请专业', validators=[Required(u'必填项'), Length(1, 400)])
+    apply_profession_category = StringField(u'申请类别', validators=[Required(u'必填项'), Length(1, 400)])
     apply_time = DateTimeField(u'申请时间')
     status = SelectField(
         u'报名状态',

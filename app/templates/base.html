@@ -3,73 +3,96 @@
 {% block title %}南山学院{% endblock %}
 
 {% block head %}
-{{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    {{ super() }}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}
 
 {% block navbar %}
-<div class="navbar navbar-inverse" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-           <a class="navbar-brand" href="{{ url_for('main.index') }}">南山学院</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('main.index') }}">主页</a></li>
-                <li><a href="{{ url_for('main.school_introduction') }}">学校简介</a></li>
-                <li><a href="{{ url_for('main.score_introduction') }}">专业介绍</a></li>
-                <li><a href="{{ url_for('apply.show_applys') }}">报名申请</a></li>
-                {% if current_user.is_authenticated and current_user.is_administrator() %}
-                <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
-                {% endif %}
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-{#                {% if current_user.can(Permission.MODERATE_COMMENTS) %}#}
-{#                <li><a href="{{ url_for('main.moderate') }}">Moderate Comments</a></li>#}
-{#                {% endif %}#}
-                {% if current_user.is_authenticated %}
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ current_user.gravatar(size=18) }}">
-                        账号 <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('auth.change_password') }}">修改密码</a></li>
-{#                        <li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>#}
-                        <li><a href="{{ url_for('auth.logout') }}">退出</a></li>
-                    </ul>
-                </li>
-                {% else %}
-                <li><a href="{{ url_for('auth.login') }}">登入</a></li>
-                {% endif %}
-            </ul>
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('main.index') }}">南山学院</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav skrollable skrollable-between" data-0="margin-top:20px;" data-300="margin-top:5px;" style="margin-top: 20px;">
+                    <li><a class="smooth" href="{{ url_for('main.index') }}">学校简介</a></li>
+                    <li><a class="smooth" href="#">校园风景</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">招生类别<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a class="smooth" href="#">普通本科</a></li>
+                            <li><a class="smooth" href="#">普通专科</a></li>
+                            <li class="divider"></li>
+                            <li><a class="smooth" href="#">注册入学</a></li>
+                            <li><a class="smooth" href="#">专本套读</a></li>
+                            <li><a class="smooth" href="#">山东大学实践本科</a></li>
+                            <li><a class="smooth" href="#">南山春季高考培训中心</a></li>
+                            <li class="divider"></li>
+                            <li><a class="smooth" href="#">国外留学</a></li>
+                            <li><a class="smooth" href="#">远程教育</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">招生问答</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">历年分数<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">2016年录取分数</a></li>
+                            <li><a href="#">2015年录取分数</a></li>
+                            <li><a href="#">2014年录取分数</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ url_for('apply.show_applys') }}">报名申请</a></li>
+                    {% if current_user.is_authenticated and current_user.is_administrator() %}
+                        <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
+                    {% endif %}
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                                    {% if current_user.can(Permission.MODERATE_COMMENTS) %}
+                                    <li><a href="{{ url_for('main.moderate') }}">Moderate Comments</a></li>
+                                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{{ current_user.gravatar(size=18) }}">
+                                账号 <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url_for('auth.change_password') }}">修改密码</a></li>
+                                                        <li><a href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
+                                <li><a href="{{ url_for('auth.logout') }}">退出</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth.login') }}">登录</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message.decode('utf-8') }}
-    </div>
-    {% endfor %}
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message.decode('utf-8') }}
+            </div>
+        {% endfor %}
 
-    {% block page_content %}{% endblock %}
-</div>
+        {% block page_content %}{% endblock %}
+    </div>
 {% endblock %}
 
 {% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
+    {{ super() }}
+    {{ moment.include_moment() }}
 {% endblock %}
